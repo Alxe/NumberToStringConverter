@@ -53,11 +53,14 @@ public class SpanishConverter extends AbstractConverter {
 		
 		if((number % 1000000) == 0) {
 			// El número es multiplo exacto de un millón.
-			return convertHundreds(number / 1000)
+			return convertHundreds(number / 1000);
 			
 		} else {
 			
 		}
+		
+		// TODO UNFINISHED
+		return null;
 	}
 	
 	private String convertThousands(int number) {
