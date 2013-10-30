@@ -1,0 +1,8 @@
+<!ELEMENT languages (lang*)>
+<!ELEMENT lang EMPTY>
+
+<!ATTLIST lang
+	id ID #REQUIRED
+	name CDATA #REQUIRED
+	directory CDATA #REQUIRED
+>

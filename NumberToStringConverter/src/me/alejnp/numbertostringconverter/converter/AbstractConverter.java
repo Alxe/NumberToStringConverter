@@ -1,4 +1,4 @@
-package me.alejnp.converters;
+package me.alejnp.numbertostringconverter.converter;
 
 import java.util.Map;
 

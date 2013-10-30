@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE numbers SYSTEM "numbers.dtd">
+
+<numbers>
+    <entry key="0" value="cero" />
+	<entry key="1" value="uno" />
+	<entry key="2" value="dos" />
+	<entry key="3" value="tres" />
+	<entry key="4" value="cuatro" />
+	<entry key="5" value="cinco" />
+	<entry key="6" value="seis" />
+	<entry key="7" value="siete" />
+	<entry key="8" value="ocho" />
+	<entry key="9" value="nueve" />
+	<entry key="10" value="diez" />
+	<entry key="11" value="once" />
+	<entry key="12" value="doce" />
+	<entry key="13" value="trece" />
+	<entry key="14" value="catorce" />
+	<entry key="15" value="quince" />
+	<entry key="20" value="veinte" />
+	<entry key="30" value="treinta" />
+	<entry key="40" value="cuarenta" />
+	<entry key="50" value="cincuenta" />
+	<entry key="60" value="sesenta" />
+	<entry key="70" value="setenta" />
+	<entry key="80" value="ochenta" />
+	<entry key="90" value="noventa" />
+	<entry key="100" value="ciento" />
+	<entry key="200" value="doscientos" />
+	<entry key="300" value="trescientos" />
+	<entry key="400" value="cuatrocientos" />
+	<entry key="500" value="quinientos" />
+	<entry key="600" value="seiscientos" />
+	<entry key="700" value="setecientos" />
+	<entry key="800" value="ochocientos" />
+	<entry key="900" value="novecientos" />
+</numbers>

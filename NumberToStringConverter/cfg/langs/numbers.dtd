@@ -1,0 +1,7 @@
+<!ELEMENT numbers (entry*)>
+<!ELEMENT entry EMPTY>
+
+<!ATTLIST entry 
+	key ID #REQUIRED
+	value CDATA #REQUIRED
+>

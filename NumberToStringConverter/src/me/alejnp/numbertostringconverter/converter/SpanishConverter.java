@@ -1,57 +1,13 @@
-package me.alejnp.converters;
+package me.alejnp.numbertostringconverter.converter;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class SpanishConverter extends AbstractConverter {
-	public static void main(String... args) {
-		HashMap<Integer, String> map = new HashMap<>();
-		
-		map.put(0, "cero");
-		map.put(1, "uno");
-		map.put(2, "dos");
-		map.put(3, "tres");
-		map.put(4, "cuatro");
-		map.put(5, "cinco");
-		map.put(6, "seis");
-		map.put(7, "siete");
-		map.put(8, "ocho");
-		map.put(9, "nueve");
-		map.put(10, "diez");
-		map.put(11, "once");
-		map.put(12, "doce");
-		map.put(13, "trece");
-		map.put(14, "catorce");
-		map.put(15, "quince");
-		map.put(20, "veinte");
-		map.put(30, "treinta");
-		map.put(40, "cuarenta");
-		map.put(50, "cincuenta");
-		map.put(60, "sesenta");
-		map.put(70, "setenta");
-		map.put(80, "ochenta");
-		map.put(90, "noventa");
-		map.put(100, "ciento");
-		map.put(200, "doscientos");
-		map.put(300, "trescientos");
-		map.put(400, "cuatrocientos");
-		map.put(500, "quinientos");
-		map.put(600, "seiscientos");
-		map.put(700, "setecientos");
-		map.put(800, "ochocientos");
-		map.put(900, "novecientos");
-		
-		
-		NumberToStringConverter ntsc = new SpanishConverter(map);
-		
-		System.out.println(ntsc.convert(0002503));
-	}
-	
+public final class SpanishConverter extends AbstractConverter {
 	private final String UNSUPORTED_NUMBER = "el método no soporta más de 999 millones";
 	private final String MINUS = "menos";
 	private final String AND = "y";
 
-	public SpanishConverter(Map<Integer, String> map) {
+	protected SpanishConverter(Map<Integer, String> map) {
 		super(map);
 	}
 
@@ -106,7 +62,7 @@ public class SpanishConverter extends AbstractConverter {
 		final int millionthOfNumber = (number / million),
 				modOfNumber = (number % million);
 		
-		final boolean moreThanAMillion = (millionthOfNumber > 1) && (modOfNumber != 0);
+		final boolean moreThanAMillion = (number > million);
 				
 		return ((moreThanAMillion) ? (convert(millionthOfNumber) + " " + sMillions) : map.get(million)) + 
 				((modOfNumber != 0) ? (" " + convert(modOfNumber)) : "");
@@ -126,7 +82,7 @@ public class SpanishConverter extends AbstractConverter {
 		final int thousandthOfNumber = (number / thousand),
 				modOfNumber = (number % thousand);
 		
-		final boolean moreThanAThousand = (thousandthOfNumber > 1) && (modOfNumber != 0);
+		final boolean moreThanAThousand = (number > thousand);
 		
 		return ((moreThanAThousand) ? (convert(thousandthOfNumber) + " ") : "") + sThousand + 
 				((modOfNumber != 0) ? (" " + convert(modOfNumber)) : ""); 
@@ -139,7 +95,7 @@ public class SpanishConverter extends AbstractConverter {
 		final int hundredthOfNumber = (number / hundred),
 				modOfNumber = (number % hundred);
 		
-		final boolean moreThanOneHundred = (hundredthOfNumber > 1) && (modOfNumber != 0);
+		final boolean moreThanOneHundred = (number > hundred);
 		
 		return (!moreThanOneHundred) ? sHundred : (
 			map.get(hundredthOfNumber * hundred) + " " + convert(modOfNumber) );
