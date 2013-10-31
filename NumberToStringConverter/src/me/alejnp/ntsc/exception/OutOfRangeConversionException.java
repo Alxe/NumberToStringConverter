@@ -1,4 +1,4 @@
-package me.alejnp.numbertostringconverter.exception;
+package me.alejnp.ntsc.exception;
 
 /**
  * Custom exception used by conversors whenever the number exceeds the supported range.

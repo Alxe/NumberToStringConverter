@@ -1,4 +1,4 @@
-package me.alejnp.numbertostringconverter.loader;
+package me.alejnp.ntsc.loader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
-import me.alejnp.numbertostringconverter.exception.ParsingException;
-import me.alejnp.numbertostringconverter.interfaces.IConfigLoader;
-import me.alejnp.numbertostringconverter.loader.parser.LanguagesHandler;
-import me.alejnp.numbertostringconverter.loader.parser.NumbersHandler;
-import me.alejnp.numbertostringconverter.locale.Language;
+import me.alejnp.ntsc.exception.ParsingException;
+import me.alejnp.ntsc.interfaces.IDataLoader;
+import me.alejnp.ntsc.loader.parser.LanguagesHandler;
+import me.alejnp.ntsc.loader.parser.NumbersHandler;
+import me.alejnp.ntsc.locale.Language;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -23,28 +23,28 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 /**
- * Android implementation of <code>{@link IConfigLoader}</code>.
+ * Android implementation of <code>{@link IDataLoader}</code>.
  * @author Alej. Núñez Pérez
  *
  */
-public final class ConfigLoader implements IConfigLoader {
+public final class DataLoader implements IDataLoader {
 	/**
-	 * Singleton object of the IClassLoader implementation.
+	 * Singleton object of the IDataLoader implementation.
 	 */
-	private static ConfigLoader _instance;
+	private static DataLoader _instance;
 	
 	/**
-	 * Returns the instance of the ClassLoader, instanciating it if it's needed.
-	 * @return The singleton of ClassLoader.
+	 * Returns the instance of the DataLoader, instanciating it if it's needed.
+	 * @return The singleton of DataLoader.
 	 */
-	public static ConfigLoader getInstance() {
-		return (_instance != null) ? _instance : (_instance = new ConfigLoader());
+	public static DataLoader getInstance() {
+		return (_instance != null) ? _instance : (_instance = new DataLoader());
 	}
 	
 	/**
 	 * Private constructor to match the singleton pattern.
 	 */
-	private ConfigLoader() {
+	private DataLoader() {
 		// Do nothing
 	}
 	
@@ -71,12 +71,12 @@ public final class ConfigLoader implements IConfigLoader {
 			
 			return list;
 			
-		} catch (SAXException e) {
-			throw new ParsingException(e.toString());
-		} catch (ParserConfigurationException e) {
-			throw new ParsingException(e.toString());
-		} catch (IOException e) {
-			throw new ParsingException(e.toString());
+		} catch (SAXException saxe) {
+			throw new ParsingException(saxe.toString());
+		} catch (ParserConfigurationException pce) {
+			throw new ParsingException(pce.toString());
+		} catch (IOException ioe) {
+			throw new ParsingException(ioe.toString());
 		}
 	}
 	
@@ -90,12 +90,12 @@ public final class ConfigLoader implements IConfigLoader {
 			xr.parse(new InputSource(context.getAssets().open(lang.PATH)));
 			
 			return map;
-		} catch (SAXException e) {
-			throw new ParsingException(e.toString());
-		} catch (ParserConfigurationException e) {
-			throw new ParsingException(e.toString());
-		} catch (IOException e) {
-			throw new ParsingException(e.toString());
+		} catch (SAXException saxe) {
+			throw new ParsingException(saxe.toString());
+		} catch (ParserConfigurationException pce) {
+			throw new ParsingException(pce.toString());
+		} catch (IOException ioe) {
+			throw new ParsingException(ioe.toString());
 		}
 	}
 }

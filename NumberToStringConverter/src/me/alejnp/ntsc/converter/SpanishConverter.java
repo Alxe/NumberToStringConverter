@@ -1,8 +1,8 @@
-package me.alejnp.numbertostringconverter.converter;
+package me.alejnp.ntsc.converter;
 
 import java.util.Map;
 
-import me.alejnp.numbertostringconverter.exception.OutOfRangeConversionException;
+import me.alejnp.ntsc.exception.OutOfRangeConversionException;
 
 public final class SpanishConverter extends AbstractConverter {
 	private final String UNSUPORTED_NUMBER = "el método no soporta más de 999 millones";

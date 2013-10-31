@@ -1,4 +1,4 @@
-package me.alejnp.numbertostringconverter.exception;
+package me.alejnp.ntsc.exception;
 
 /**
  * Custom exception used in parsing non-critical errors.

@@ -1,17 +1,17 @@
-package me.alejnp.numbertostringconverter.interfaces;
+package me.alejnp.ntsc.interfaces;
 
 import java.util.List;
 import java.util.Map;
 
-import me.alejnp.numbertostringconverter.exception.ParsingException;
-import me.alejnp.numbertostringconverter.locale.Language;
+import me.alejnp.ntsc.exception.ParsingException;
+import me.alejnp.ntsc.locale.Language;
 
 /**
- * Interface to be implemented by the class that will natively manage configuration and values needed by the core package.
+ * Interface to be implemented by the class that will natively manage and load data needed by the core package.
  * @author Alej. Núñez Pérez
  *
  */
-public interface IConfigLoader {
+public interface IDataLoader {
 	/**
 	 * Checks for the supported languages, defined in an xml file of name languages.xml on the assets folder.
 	 * @return A list containing the supported languages.

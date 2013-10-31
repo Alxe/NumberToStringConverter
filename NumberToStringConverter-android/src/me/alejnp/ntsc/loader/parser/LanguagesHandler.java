@@ -1,8 +1,8 @@
-package me.alejnp.numbertostringconverter.loader.parser;
+package me.alejnp.ntsc.loader.parser;
 
 import java.util.List;
 
-import me.alejnp.numbertostringconverter.locale.Language;
+import me.alejnp.ntsc.locale.Language;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

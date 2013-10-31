@@ -1,9 +1,12 @@
-package me.alejnp.numbertostringconverter;
+package me.alejnp.ntsc;
 
-import me.alejnp.numbertostringconverter.converter.ConverterFactory;
-import me.alejnp.numbertostringconverter.interfaces.IConverter;
+import me.alejnp.ntsc.converter.ConverterFactory;
+import me.alejnp.ntsc.exception.UnsupportedLanguageException;
+import me.alejnp.ntsc.interfaces.IConverter;
+import me.alejnp.numbertostringconverter.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +15,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	private final class AddNumberOnclickListener implements OnClickListener {
+	private abstract class AbstractOnClickListener implements OnClickListener {
+		@Override
+		public final void onClick(View v) {
+			doSomething(v);
+			reConvert();
+			
+		}
+		
+		private final void reConvert() {
+			int number = Integer.parseInt((String) lblNumber.getText());
+			String word = ntsc.convert(number);
+			
+			lblString.setText(word);
+		}
+		
+		public abstract void doSomething(View v);
+	}
+	private final class AddNumberOnclickListener extends AbstractOnClickListener {
 		private final int value;
 		
 		public AddNumberOnclickListener(int value) {
@@ -20,7 +40,7 @@ public class MainActivity extends Activity {
 		}
 		
 		@Override
-		public void onClick(View v) {
+		public void doSomething(View v) {
 			addToAccumulator(value);
 			updateWords();
 		}
@@ -67,7 +87,12 @@ public class MainActivity extends Activity {
 		lblNumber = (TextView) findViewById(R.id.lblNumber);
 		lblString = (TextView) findViewById(R.id.lblString);
 		
-//		ntsc = NumberToStringFactory.getConverter(getString(R.string.lang));
+		try {
+			ntsc = ConverterFactory.getConverter(getString(R.string.lang));
+		} catch (UnsupportedLanguageException ule) {
+			Log.e("NumberToStringConverter", "Language not supported; no converter was returned. Be ready for it to crash...");
+			ule.printStackTrace();
+		}
 		
 	}
 	

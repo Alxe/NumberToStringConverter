@@ -1,8 +1,8 @@
-package me.alejnp.numbertostringconverter.converter;
+package me.alejnp.ntsc.converter;
 
 import java.util.Map;
 
-import me.alejnp.numbertostringconverter.interfaces.IConverter;
+import me.alejnp.ntsc.interfaces.IConverter;
 
 /**
  * Convenience class for those properties shared by all Converters, namely, the mappings.

@@ -1,6 +1,6 @@
-package me.alejnp.numbertostringconverter.interfaces;
+package me.alejnp.ntsc.interfaces;
 
-import me.alejnp.numbertostringconverter.exception.OutOfRangeConversionException;
+import me.alejnp.ntsc.exception.OutOfRangeConversionException;
 
 /**
  * Interface to be implemented by a class designed to play nice with the Converter framework.

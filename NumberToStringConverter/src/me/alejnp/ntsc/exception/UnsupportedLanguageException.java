@@ -1,4 +1,4 @@
-package me.alejnp.numbertostringconverter.exception;
+package me.alejnp.ntsc.exception;
 
 /**
  * Custom exception used when the Conversor of the Language specified is not available

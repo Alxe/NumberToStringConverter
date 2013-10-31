@@ -1,4 +1,4 @@
-package me.alejnp.numbertostringconverter.locale;
+package me.alejnp.ntsc.locale;
 
 /**
  * Convenience class for storage of Language, with properties useful for localization.
