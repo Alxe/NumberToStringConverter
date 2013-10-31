@@ -5,3 +5,7 @@
 *.jar
 *.war
 *.ear
+
+# Remove generated Java classes (R)
+*/bin/*
+*/gen/*
