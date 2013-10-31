@@ -1,6 +1,6 @@
-package me.alejnp.numbertostringconverter.converter;
+package me.alejnp.numbertostringconverter.interfaces;
 
-public interface NumberToStringConverter {
+public interface IConverter {
 	/**
 	 * Convierte un número a String, dependiendo de la localización de la clase que implementa.
 	 * @param number - El número a convertir a texto.

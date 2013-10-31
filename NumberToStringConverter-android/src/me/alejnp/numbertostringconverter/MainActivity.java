@@ -1,5 +1,7 @@
 package me.alejnp.numbertostringconverter;
 
+import me.alejnp.numbertostringconverter.converter.ConverterFactory;
+import me.alejnp.numbertostringconverter.interfaces.IConverter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,9 +9,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	private static final class AddNumberOnclickListener implements OnClickListener {
+	private final class AddNumberOnclickListener implements OnClickListener {
 		private final int value;
 		
 		public AddNumberOnclickListener(int value) {
@@ -18,8 +21,8 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			
+			addToAccumulator(value);
+			updateWords();
 		}
 	}
 
@@ -27,6 +30,7 @@ public class MainActivity extends Activity {
 	private Button btnZero, btnOne, btnTwo, btnThree,
 		btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine,
 		btnReset, btnDot;
+	private IConverter ntsc;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,9 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		updateReferences();
+		setDefaultValues();
 		setListeners();
+		
 	}
 
 	@Override
@@ -58,9 +64,44 @@ public class MainActivity extends Activity {
 		btnDot = (Button) findViewById(R.id.btnDot);
 		btnReset = (Button) findViewById(R.id.btnReset);
 		
+		lblNumber = (TextView) findViewById(R.id.lblNumber);
+		lblString = (TextView) findViewById(R.id.lblString);
+		
+//		ntsc = NumberToStringFactory.getConverter(getString(R.string.lang));
+		
+	}
+	
+	private void setDefaultValues() {
+		lblNumber.setText(R.string.empty_number);
+		lblString.setText(R.string.empty_string);
+		
+	}
+	
+	/**
+	 * Returns an updated value of the accumulator. This method has no side effects (changing accumulator value).
+	 * @return The new value
+	 */
+	public int getAccumulator() {
+		return Integer.parseInt(((String) lblNumber.getText()));
+	}
+	
+	public void addToAccumulator(int i) {
+		if(getAccumulator() == 0) {
+			lblNumber.setText(R.string.empty_string);
+		}
+		
+		lblNumber.setText(((String) lblNumber.getText()) + i);
+	}
+	
+	public void resetAccumulator() {
+		lblNumber.setText(R.string.empty_number);
+	}
+	
+	public void updateWords() {
+//		lblString.setText(ntsc.convert(getAccumulator()));
 	}
 
-	public void setListeners() {
+	private void setListeners() {
 		btnZero.setOnClickListener(new AddNumberOnclickListener(0));
 		btnOne.setOnClickListener(new AddNumberOnclickListener(1));
 		btnTwo.setOnClickListener(new AddNumberOnclickListener(2));
@@ -76,8 +117,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				resetAccumulator();
 			}
 		});
 		
@@ -85,7 +125,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "UNSUPPORTED", Toast.LENGTH_LONG).show();
 				
 			}
 		});

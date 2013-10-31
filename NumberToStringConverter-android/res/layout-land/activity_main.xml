@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
+    android:orientation="horizontal" 
     android:baselineAligned="false">
     
     <LinearLayout 
@@ -16,8 +16,8 @@
 		    android:id="@+id/lblNumber"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:layout_marginTop="12dp"
 		    android:textAlignment="center"
+		    android:layout_marginTop="12dp"
 		    android:freezesText="true"
 		    android:text="Number"
 		    android:textSize="21sp" />
@@ -26,6 +26,7 @@
 	        android:id="@+id/lblString"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+		    android:textAlignment="center"
 	        android:layout_marginTop="24dp"
 	        android:freezesText="true"
 	        android:text="Word"
@@ -152,6 +153,4 @@
 		        android:text="." />
 		</LinearLayout>
     </LinearLayout>
-    
-    
 </LinearLayout>
