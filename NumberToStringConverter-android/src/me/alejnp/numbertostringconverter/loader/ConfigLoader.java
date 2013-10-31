@@ -1,17 +1,19 @@
 package me.alejnp.numbertostringconverter.loader;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
-import me.alejnp.numbertostringconverter.R;
-import me.alejnp.numbertostringconverter.converter.ConverterFactory.Language;
 import me.alejnp.numbertostringconverter.exception.ParsingException;
 import me.alejnp.numbertostringconverter.interfaces.IConfigLoader;
+import me.alejnp.numbertostringconverter.loader.parser.LanguagesHandler;
 import me.alejnp.numbertostringconverter.loader.parser.NumbersHandler;
+import me.alejnp.numbertostringconverter.locale.Language;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -37,15 +39,22 @@ public final class ConfigLoader implements IConfigLoader {
 		this.context = context;
 	}
 	
-	public Language[] getSupportedLanguages() {
-		String[] array = context.getResources().getStringArray(R.array.languages);
-		Language[] langs = new Language[array.length];
-		
-		for(int i = 0; i < array.length; i++) {
-			langs[i] = new Language(array[i]);
+	public Language[] getSupportedLanguages() throws ParsingException {
+		try {
+			List<Language> array = new ArrayList<Language>();
+			
+			XMLReader xr = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
+			xr.setContentHandler(new LanguagesHandler(array));
+			xr.parse(new InputSource(context.getAssets().open("languages.xml")));
+			
+			return array.toArray(new Language[array.size()]);
+		} catch (SAXException e) {
+			throw new ParsingException(e.toString());
+		} catch (ParserConfigurationException e) {
+			throw new ParsingException(e.toString());
+		} catch (IOException e) {
+			throw new ParsingException(e.toString());
 		}
-		
-		return langs;
 	}
 	
 	@SuppressLint("UseSparseArrays")

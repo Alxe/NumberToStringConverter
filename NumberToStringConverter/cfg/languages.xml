@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE languages SYSTEM "languages.dtd">
-
-<languages>
-	<lang directory="./langs/numbers_en.xml" name="english" id="en"/>
-	<lang directory="./langs/numbers_es.xml" name="spanish" id="es"/>
-	
-</languages>

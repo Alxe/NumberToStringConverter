@@ -7,25 +7,28 @@ import me.alejnp.numbertostringconverter.exception.ParsingException;
 import me.alejnp.numbertostringconverter.exception.UnsupportedLanguageException;
 import me.alejnp.numbertostringconverter.interfaces.IConfigLoader;
 import me.alejnp.numbertostringconverter.interfaces.IConverter;
+import me.alejnp.numbertostringconverter.locale.Language;
 
+/**
+ * Factory class that provides instances of Converters.
+ * @author Alej. Núñez Pérez
+ *
+ */
 public class ConverterFactory {
-	public final static class Language {
-		public final String ID;
-		
-		public Language(String id) {
-			ID = id;
-		}
-		
-		@Override
-		public String toString() {
-			return "Language [ID=" + ID + "]";
-		}
-	}
-	
+	/**
+	 * Reference to the ConfigLoader needed to retrieve data from the system. This is required and up to the implemented platform to be provided.
+	 */
 	private static IConfigLoader configLoader;
 	
+	/**
+	 * Mappings of <code>Languages</code> to <code>IConverter</code> instances, making heavy instanciation less stressful to the system.
+	 */
 	private static Map<Language, IConverter> converters;
 	
+	/**
+	 * Setter for the ConfigLoader field. See the {@link configLoader} field.
+	 * @param configLoader - The new ConfigLoader.
+	 */
 	public static void setConfigLoader(IConfigLoader configLoader) {
 		ConverterFactory.configLoader = configLoader;
 	}
@@ -45,7 +48,8 @@ public class ConverterFactory {
 		try {
 			Map<?,?> map = configLoader.getLanguageMap("numbers_" + lang.ID + ".xml");
 			
-			converters.put(lang, map);
+			// TODO
+//			converters.put(lang, map);
 		} catch(ParsingException pe) {
 			System.err.println("NumberToStringConverter: Error parsing file, either file was not found or the XMLReader failed");
 		}
