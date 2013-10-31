@@ -2,11 +2,16 @@ package me.alejnp.numbertostringconverter.converter;
 
 import java.util.Map;
 
+import me.alejnp.numbertostringconverter.exception.OutOfRangeConversionException;
+
 public final class SpanishConverter extends AbstractConverter {
 	private final String UNSUPORTED_NUMBER = "el método no soporta más de 999 millones";
 	private final String MINUS = "menos";
 	private final String AND = "y";
 
+	/**
+	 * @see AbstractConverter#AbstractConverter(Map)
+	 */
 	protected SpanishConverter(Map<Integer, String> map) {
 		super(map);
 	}
@@ -26,7 +31,7 @@ public final class SpanishConverter extends AbstractConverter {
 		
 		if(number > 999999999) {
 			// En el caso de que el valor superase los 999 millones, tiramos una excepción mencionando que no está soportado.
-			throw new IllegalArgumentException(UNSUPORTED_NUMBER);
+			throw new OutOfRangeConversionException(UNSUPORTED_NUMBER);
 			
 		} else if(number > 999999) {
 			// El número será inferior a mil millones, pero igual o mayor a un millón.

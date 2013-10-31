@@ -6,6 +6,11 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * Handler for <code>Number:String</code> mappings in XML files
+ * @author Alej. Núñez Pérez
+ *
+ */
 public class NumbersHandler extends DefaultHandler {
 	private final Map<Integer, String> map;
 	

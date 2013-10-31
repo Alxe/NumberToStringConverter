@@ -1,6 +1,7 @@
 package me.alejnp.numbertostringconverter.converter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import me.alejnp.numbertostringconverter.exception.ParsingException;
@@ -33,10 +34,22 @@ public class ConverterFactory {
 		ConverterFactory.configLoader = configLoader;
 	}
 	
+	/**
+	 * Convenience but less secure call to {@link #getConverter(Language)}.
+	 * @param lang - <code>String</code> corresponding to the ID of the <code>Language</code>.
+	 * @return
+	 * @throws UnsupportedLanguageException - When the language is not supported, this 
+	 */
 	public static IConverter getConverter(String lang) throws UnsupportedLanguageException {	
-		return getConverter(new Language(lang));
+		return getConverter(new Language(lang, lang));
 	}
 	
+	/**
+	 * Method that returns a <code>IConverter</code> instance of a given <code>Language lang</code>.
+	 * @param lang - 
+	 * @return
+	 * @throws UnsupportedLanguageException
+	 */
 	public static IConverter getConverter(Language lang) throws UnsupportedLanguageException {
 		if(converters == null) { initializeMap(); }
 		if(converters.get(lang) == null) { buildLanguage(lang); }
@@ -46,24 +59,27 @@ public class ConverterFactory {
 
 	private static void buildLanguage(Language lang) throws UnsupportedLanguageException {
 		try {
-			Map<?,?> map = configLoader.getLanguageMap("numbers_" + lang.ID + ".xml");
+			Map<Integer,String> map = configLoader.getLanguageMap(lang);
 			
 			// TODO
 //			converters.put(lang, map);
 		} catch(ParsingException pe) {
 			System.err.println("NumberToStringConverter: Error parsing file, either file was not found or the XMLReader failed");
+			pe.printStackTrace();
 		}
 		
 	}
 
 	private static void initializeMap() {
 		converters = new HashMap<>();
-		
-		// Loading from XML file.
-		 Language[] langs = configLoader.getSupportedLanguages();
-		
-		for(Language l : langs) {
-			converters.put(l, null);
+	 
+		try {
+			for(Language l : configLoader.getSupportedLanguages()) {
+				converters.put(l, null);
+			}
+			
+		} catch (ParsingException e) {
+			e.printStackTrace();
 		}
 	}
 }
