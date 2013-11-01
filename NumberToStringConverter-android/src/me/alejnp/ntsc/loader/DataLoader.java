@@ -11,9 +11,9 @@ import javax.xml.parsers.SAXParserFactory;
 
 import me.alejnp.ntsc.exception.ParsingException;
 import me.alejnp.ntsc.interfaces.IDataLoader;
-import me.alejnp.ntsc.loader.parser.LanguagesHandler;
-import me.alejnp.ntsc.loader.parser.NumbersHandler;
 import me.alejnp.ntsc.locale.Language;
+import me.alejnp.ntsc.parser.LanguagesHandler;
+import me.alejnp.ntsc.parser.NumbersHandler;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

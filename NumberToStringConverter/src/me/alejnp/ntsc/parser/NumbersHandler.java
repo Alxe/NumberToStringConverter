@@ -1,4 +1,4 @@
-package me.alejnp.ntsc.loader.parser;
+package me.alejnp.ntsc.parser;
 
 import java.util.Map;
 
