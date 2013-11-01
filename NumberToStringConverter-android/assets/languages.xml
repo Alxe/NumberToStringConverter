@@ -3,6 +3,12 @@
 <!DOCTYPE languages SYSTEM "languages.dtd">
 
 <languages>
-	<entry directory="numbers/numbers_en.xml" name="english" id="en"/>
-	<entry directory="numbers/numbers_es.xml" name="spanish" id="es"/>
+	<entry id="en"
+	    dataPath="numbers/numbers_en.xml" 
+	    converterClass="me.alejnp.converter.EnglishConverter" />
+	
+	<entry id="es"
+	    dataPath="numbers/numbers_es.xml"
+	    converterClass="me.alejno.converter.SpanishConverter" />
+	
 </languages>

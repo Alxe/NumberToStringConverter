@@ -3,6 +3,5 @@
 
 <!ATTLIST lang
 	id ID #REQUIRED
-	name CDATA #REQUIRED
-	directory CDATA #REQUIRED
->
+	dataPath CDATA #REQUIRED
+	converterClass CDATA #REQUIRED>

@@ -29,35 +29,14 @@ import android.content.Context;
  */
 public final class DataLoader implements IDataLoader {
 	/**
-	 * Singleton object of the IDataLoader implementation.
+	 * Context of the Android Activity, used to retrieve assets.
 	 */
-	private static DataLoader _instance;
-	
-	/**
-	 * Returns the instance of the DataLoader, instanciating it if it's needed.
-	 * @return The singleton of DataLoader.
-	 */
-	public static DataLoader getInstance() {
-		return (_instance != null) ? _instance : (_instance = new DataLoader());
-	}
+	private final Context context;
 	
 	/**
 	 * Private constructor to match the singleton pattern.
 	 */
-	private DataLoader() {
-		// Do nothing
-	}
-	
-	/**
-	 * Context of the Android Activity, used to retrieve assets.
-	 */
-	private Context context;
-	
-	/**
-	 * Setter for the context.
-	 * @param context - The new context.
-	 */
-	public void setContext(Context context) {
+	public DataLoader(Context context) {
 		this.context = context;
 	}
 	
@@ -65,6 +44,7 @@ public final class DataLoader implements IDataLoader {
 		try {
 			List<Language> list = new ArrayList<Language>();
 			
+			// Instances a XMLReader, sets it's content handler and passes the retrieved data to a list.
 			XMLReader xr = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
 			xr.setContentHandler(new LanguagesHandler(list));
 			xr.parse(new InputSource(context.getAssets().open("languages.xml")));
@@ -85,6 +65,7 @@ public final class DataLoader implements IDataLoader {
 		try {
 			Map<Integer, String> map = new HashMap<Integer, String>();
 			
+			// Instances a XMLReader, sets it's content handler and passes the retrieved data to a map.
 			XMLReader xr = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
 			xr.setContentHandler(new NumbersHandler(map));
 			xr.parse(new InputSource(context.getAssets().open(lang.PATH)));

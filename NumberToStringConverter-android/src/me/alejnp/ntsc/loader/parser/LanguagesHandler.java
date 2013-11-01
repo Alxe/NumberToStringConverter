@@ -9,20 +9,27 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class LanguagesHandler extends DefaultHandler {
-	private final List<Language> array;
+	/**
+	 * A reference indicating where to store the parsed data.
+	 */
+	private final List<Language> list;
 	
-	public LanguagesHandler(List<Language> array) {
-		this.array = array;
+	/**
+	 * @param list - The reference of the list that will store the results.
+	 */
+	public LanguagesHandler(List<Language> list) {
+		this.list = list;
 	}
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if(uri.equals("entry")) {
+		// Retrieves "id", "className" and "xmlPath" per "entry" of the languages.xml file.
+		if(localName.equals("entry")) {
 			String id = attributes.getValue("id");
-			String name = attributes.getValue("name");
-			String directory = attributes.getValue("directory");
+			String path = attributes.getValue("xmlPath");
+			String className = attributes.getValue("className");
 			
-			array.add(new Language(id, name, directory));
+			list.add(new Language(id, className, path));
 		}
 	}
 }

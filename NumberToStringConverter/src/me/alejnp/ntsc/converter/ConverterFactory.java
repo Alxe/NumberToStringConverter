@@ -1,7 +1,9 @@
 package me.alejnp.ntsc.converter;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import me.alejnp.ntsc.exception.ParsingException;
@@ -16,22 +18,42 @@ import me.alejnp.ntsc.locale.Language;
  *
  */
 public class ConverterFactory {
+	private static List<ConverterFactory> factories;
+	
+	public static ConverterFactory getFactory(IDataLoader dataLoader) {
+		// If the IDataLoader is null, return null.
+		if(dataLoader == null) return null;
+		
+		// If the List is not instanciated, instanciate it.
+		if(factories == null) factories = new ArrayList<ConverterFactory>();
+		
+		// Traverse the list, search for a compatible factory and return it.
+		for (ConverterFactory cf : factories) {
+			if(cf.dataLoader.equals(dataLoader)) return cf;
+		}
+		
+		// If no compatible factory was found, instanciate it and add it to the list, then return it.
+		ConverterFactory cf = new ConverterFactory(dataLoader);
+		
+		factories.add(cf);
+		return cf;
+		
+	}
+	
 	/**
-	 * Reference to the ConfigLoader needed to retrieve data from the system. This is required and up to the implemented platform to be provided.
+	 * Reference to the {@link IDataLoader} needed to retrieve data from the system. This is required and up to the implemented platform to be provided.
 	 */
-	private static IDataLoader configLoader;
+	private final IDataLoader dataLoader;
 	
 	/**
 	 * Mappings of <code>Languages</code> to <code>IConverter</code> instances, making heavy instanciation less stressful to the system.
 	 */
-	private static Map<Language, IConverter> converters;
+	private final Map<Language, IConverter> converters;
 	
-	/**
-	 * Setter for the ConfigLoader field. See the {@link configLoader} field.
-	 * @param configLoader - The new ConfigLoader.
-	 */
-	public static void setConfigLoader(IDataLoader configLoader) {
-		ConverterFactory.configLoader = configLoader;
+	private ConverterFactory(IDataLoader dataLoader) {
+		this.dataLoader = dataLoader;
+		
+		converters = createConverterPool();
 	}
 	
 	/**
@@ -40,7 +62,13 @@ public class ConverterFactory {
 	 * @return
 	 * @throws UnsupportedLanguageException - When the language is not supported, this 
 	 */
-	public static IConverter getConverter(String langId) throws UnsupportedLanguageException {	
+	public IConverter getConverter(String langId) throws UnsupportedLanguageException {
+		Language lang = null;
+		
+		for(Language l : converters.keySet()) if(l.ID.equals(langId)) { lang = l; break; }
+			
+		if(lang == null) throw new UnsupportedLanguageException("There is no language for ID " + langId);
+		
 		return getConverter(new Language(langId, null));
 	}
 	
@@ -50,37 +78,33 @@ public class ConverterFactory {
 	 * @return
 	 * @throws UnsupportedLanguageException
 	 */
-	public static IConverter getConverter(Language lang) throws UnsupportedLanguageException {
-		if(converters == null) { initMapping(); }
-		
-		// Check if provided Language has full name set. If not, tries to figure it, if does, skips this block.
-		if(lang.NAME == null || lang.NAME.equals(lang.ID)) {
-			for(Language l : converters.keySet()) {
-				if(lang.ID == l.ID) { lang = l; break; }
-			}
-		}
+	public IConverter getConverter(Language lang) throws UnsupportedLanguageException {	
+		if(lang == null) throw new UnsupportedLanguageException("There is no language for ID " + lang);
 		
 		// If converter is not properly instanciated, instanciates it and saves it in the map.
-		if(converters.get(lang) == null) { buildLanguage(lang); }
+		if(converters.get(lang) == null) { buildConverterForLanguage(lang); }
 	
 		// Returns the converter.
 		return converters.get(lang);
 	}
 
 	/**
-	 * Initializes the map and sets the keys to null, which will be properly linked later in {@link #buildLanguage(Language)}.
+	 * Initializes a map, sets it's keys to Languages supported and it's values to null, which will be properly linked later in {@link #buildLanguage(Language)}.
 	 */
-	private static void initMapping() {
-		converters = new HashMap<>();
+	private Map<Language, IConverter> createConverterPool() {
+		Map<Language, IConverter> converters = new HashMap<Language, IConverter>();
 	 
 		try {
-			for(Language l : configLoader.getSupportedLanguages()) {
+			for(Language l : dataLoader.getSupportedLanguages()) {
 				converters.put(l, null);
 			}
 			
 		} catch (ParsingException e) {
+			System.err.println("Couldn't load languages properly.");
 			e.printStackTrace();
 		}
+		
+		return converters;
 	}
 	
 	/**
@@ -88,37 +112,51 @@ public class ConverterFactory {
 	 * @param lang - The target Language to build.
 	 * @throws UnsupportedLanguageException Thrown if the language is not supported
 	 */
-	private static void buildLanguage(Language lang) throws UnsupportedLanguageException {
+	private IConverter buildConverterForLanguage(Language lang) throws UnsupportedLanguageException {
 		try {
-			Map<Integer, String> map = configLoader.getLanguageMap(lang);
+			Map<Integer, String> map = dataLoader.getLanguageMap(lang);
 			
-			// Search for the class that implemenents the Language via Reflection trickery.
-			String packageName = "me.alejnp.numbertostringconverter.converter.",
-					className = (Character.toUpperCase(lang.NAME.charAt(0)) + lang.NAME.substring(1)) + "Converter";
-			
-			IConverter conversor = buildConverter(packageName + className, map);
+			IConverter conversor = instanciateConverter(lang.CLASS_NAME, map);
 			
 			converters.put(lang, conversor);
+			return conversor;
 			
 		} catch(ParsingException pe) {
 			System.err.println("NumberToStringConverter: Error parsing file, either file was not found or the XMLReader failed");
 			pe.printStackTrace();
 		}
 		
+		return null;
 	}
 
-	private static IConverter buildConverter(String name, Map<Integer, String> map) {
+	/**
+	 * Instanciates a new Converter from class <code>className</code>, with <code>values</code> associated to it.
+	 * @param className - The class name of the {@link IConverter} to instanciate.
+	 * @param values - The values that will be passed to the {@link IConverter} object.
+	 * @return
+	 */
+	private IConverter instanciateConverter(String className, Map<Integer, String> values) {
 		try {
 			IConverter converter;
 			
-			Constructor<?> constr = Class.forName(name).getConstructor(Map.class);
-			converter = (IConverter) constr.newInstance(map);
+			// Obtain the class of the desired object.
+			Class<?> clazz = Class.forName(className);
+			
+			// Get the type of the values map we will send into the constructor.
+			Class<?> type = values.getClass();
+			
+			// Grab the constructor of the class we want to instanciate.
+			Constructor<?> constr = clazz.getConstructor(type);
+			
+			// Finish by instanciating the converter.
+			converter = (IConverter) constr.newInstance(values);
 			
 			return converter;
 		} catch(ReflectiveOperationException e) {
+			System.err.println("Failed at instanciating the converter, blankConverter will be returned.");
 			e.printStackTrace();
-			
-			return null;
 		}
+		
+		return null;
 	}
 }

@@ -1,12 +1,8 @@
 package me.alejnp.ntsc;
 
-import me.alejnp.ntsc.converter.ConverterFactory;
-import me.alejnp.ntsc.exception.UnsupportedLanguageException;
 import me.alejnp.ntsc.interfaces.IConverter;
-import me.alejnp.numbertostringconverter.R;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -86,14 +82,6 @@ public class MainActivity extends Activity {
 		
 		lblNumber = (TextView) findViewById(R.id.lblNumber);
 		lblString = (TextView) findViewById(R.id.lblString);
-		
-		try {
-			ntsc = ConverterFactory.getConverter(getString(R.string.lang));
-		} catch (UnsupportedLanguageException ule) {
-			Log.e("NumberToStringConverter", "Language not supported; no converter was returned. Be ready for it to crash...");
-			ule.printStackTrace();
-		}
-		
 	}
 	
 	private void setDefaultValues() {

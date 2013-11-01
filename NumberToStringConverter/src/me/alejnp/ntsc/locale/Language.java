@@ -13,10 +13,10 @@ public final class Language {
 	public final String ID;
 	
 	/**
-	 * The name of the language in plain English, critical for the <code>IConverter</code> implementations.<br />
-	 * &emsp;examples: "english" for English, "spanish" for Spanish.
+	 * The name of the class that impelements {@link IConverter}, appended to it's package.<br />
+	 * &emsp;examples: "EnglishConverter" for English, "SpanishConverter" for Spanish.
 	 */
-	public final String NAME;
+	public final String CLASS_NAME;
 	
 	/**
 	 * The path of the XML file to be parsed.<br />
@@ -34,14 +34,13 @@ public final class Language {
 	}
 	
 	/**
-	 * Shorter Constructor, the <code>PATH</code> is defaulted to "numbers/numbers_{id}.xml".
 	 * @param id - The ID of the language
-	 * @param name - The full name of the language
+	 * @param className - The full name of the language
 	 * @param path - The path of the XML file with the mappings
 	 */
-	public Language(String id, String name, String path) {
+	public Language(String id, String className, String path) {
 		ID = id;
-		NAME = name;
+		CLASS_NAME = className;
 		PATH = path;
 	}
 
@@ -50,7 +49,7 @@ public final class Language {
 	 */
 	@Override
 	public String toString() {
-		return "Language [ID=" + ID + ", NAME=" + NAME + ", PATH=" + PATH + "]";
+		return "Language [ID=" + ID + ", CLASS_NAME=" + CLASS_NAME + ", PATH=" + PATH + "]";
 	}
 
 	/**
@@ -63,7 +62,7 @@ public final class Language {
 		result = prime * result
 				+ ((PATH == null) ? 0 : PATH.hashCode());
 		result = prime * result + ((ID == null) ? 0 : ID.hashCode());
-		result = prime * result + ((NAME == null) ? 0 : NAME.hashCode());
+		result = prime * result + ((CLASS_NAME == null) ? 0 : CLASS_NAME.hashCode());
 		return result;
 	}
 
@@ -89,10 +88,10 @@ public final class Language {
 				return false;
 		} else if (!ID.equals(other.ID))
 			return false;
-		if (NAME == null) {
-			if (other.NAME != null)
+		if (CLASS_NAME == null) {
+			if (other.CLASS_NAME != null)
 				return false;
-		} else if (!NAME.equals(other.NAME))
+		} else if (!CLASS_NAME.equals(other.CLASS_NAME))
 			return false;
 		return true;
 	}

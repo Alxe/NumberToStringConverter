@@ -2,6 +2,7 @@ package me.alejnp.ntsc.converter;
 
 import java.util.Map;
 
+import me.alejnp.ntsc.exception.OutOfRangeConversionException;
 import me.alejnp.ntsc.interfaces.IConverter;
 
 /**
@@ -10,6 +11,18 @@ import me.alejnp.ntsc.interfaces.IConverter;
  *
  */
 public abstract class AbstractConverter implements IConverter {
+	/**
+	 * Blank instance of {@link AbstractConverter}, useful to return this instead of null.
+	 */
+	protected static final IConverter blankConverter = new AbstractConverter(null) {
+		@Override
+		public String convert(int number) throws OutOfRangeConversionException {
+			// Do nothing, return empty string.
+			
+			return "";
+		}
+	};
+	
 	/**
 	 * Mappings of <code>Number</code> to <code>String</code> needed by the Converter
 	 */
