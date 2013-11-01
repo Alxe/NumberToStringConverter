@@ -1,6 +1,9 @@
 package me.alejnp.ntsc;
 
+import me.alejnp.ntsc.converter.ConverterFactory;
+import me.alejnp.ntsc.exception.UnsupportedLanguageException;
 import me.alejnp.ntsc.interfaces.IConverter;
+import me.alejnp.ntsc.loader.DataLoader;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +17,8 @@ public class MainActivity extends Activity {
 	private abstract class AbstractOnClickListener implements OnClickListener {
 		@Override
 		public final void onClick(View v) {
+			if(ntsc == null) updateConverter();
+			
 			doSomething(v);
 			reConvert();
 			
@@ -56,6 +61,18 @@ public class MainActivity extends Activity {
 		updateReferences();
 		setDefaultValues();
 		setListeners();
+		
+	}
+
+	public void updateConverter() {
+		DataLoader dl = new DataLoader(getApplicationContext());
+		ConverterFactory cf = ConverterFactory.getFactory(dl);
+		
+		try {
+			cf.getConverter(getString(R.string.lang));
+		} catch (UnsupportedLanguageException e) {
+			Toast.makeText(getApplicationContext(), R.string.converter_not_found, Toast.LENGTH_SHORT).show();
+		}
 		
 	}
 
@@ -111,7 +128,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void updateWords() {
-//		lblString.setText(ntsc.convert(getAccumulator()));
+		lblString.setText(ntsc.convert(getAccumulator()));
 	}
 
 	private void setListeners() {

@@ -3,6 +3,8 @@
 	<name>NumberToStringConverter-android</name>
 	<comment></comment>
 	<projects>
+		<project>Glue</project>
+		<project>NumberToStringConverter</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -23,7 +23,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 /**
- * Android implementation of <code>{@link IDataLoader}</code>.
+ * Android implementation of {@link IDataLoader}.
  * @author Alej. Núñez Pérez
  *
  */
