@@ -12,8 +12,14 @@ import org.xml.sax.helpers.DefaultHandler;
  *
  */
 public class NumbersHandler extends DefaultHandler {
+	/**
+	 * A reference indicating where to store the parsed data.
+	 */
 	private final Map<Integer, String> map;
 	
+	/**
+	 * @param map - The reference of the map that will store the results.
+	 */
 	public NumbersHandler(Map<Integer, String> map) {
 		this.map = map;
 	}

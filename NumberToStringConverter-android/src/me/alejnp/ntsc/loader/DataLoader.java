@@ -34,7 +34,7 @@ public final class DataLoader implements IDataLoader {
 	private final Context context;
 	
 	/**
-	 * Private constructor to match the singleton pattern.
+	 * @param context - The context of the {@link android.app.Activity} this {@link IDataLoader} will be based of.
 	 */
 	public DataLoader(Context context) {
 		this.context = context;
@@ -52,11 +52,11 @@ public final class DataLoader implements IDataLoader {
 			return list;
 			
 		} catch (SAXException saxe) {
-			throw new ParsingException(saxe.toString());
+			throw new ParsingException(saxe.getMessage());
 		} catch (ParserConfigurationException pce) {
-			throw new ParsingException(pce.toString());
+			throw new ParsingException(pce.getMessage());
 		} catch (IOException ioe) {
-			throw new ParsingException(ioe.toString());
+			throw new ParsingException(ioe.getMessage());
 		}
 	}
 	
