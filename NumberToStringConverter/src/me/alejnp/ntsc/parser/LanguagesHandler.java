@@ -2,7 +2,7 @@ package me.alejnp.ntsc.parser;
 
 import java.util.List;
 
-import me.alejnp.ntsc.locale.Language;
+import me.alejnp.ntsc.locale.LangData;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -12,12 +12,12 @@ public class LanguagesHandler extends DefaultHandler {
 	/**
 	 * A reference indicating where to store the parsed data.
 	 */
-	private final List<Language> list;
+	private final List<LangData> list;
 	
 	/**
 	 * @param list - The reference of the list that will store the results.
 	 */
-	public LanguagesHandler(List<Language> list) {
+	public LanguagesHandler(List<LangData> list) {
 		this.list = list;
 	}
 	
@@ -29,7 +29,7 @@ public class LanguagesHandler extends DefaultHandler {
 			String path = attributes.getValue("xmlPath");
 			String className = attributes.getValue("className");
 			
-			list.add(new Language(id, className, path));
+			list.add(new LangData(id, className, path));
 		}
 	}
 }

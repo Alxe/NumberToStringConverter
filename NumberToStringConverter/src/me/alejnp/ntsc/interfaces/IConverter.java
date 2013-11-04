@@ -14,5 +14,5 @@ public interface IConverter {
 	 * @return Textual representation of the number as <code>String</code>.
 	 * @throws OutOfRangeConversionException Thrown when the <code>number</code> exceeds the allowed value.
 	 */
-	public String convert(int number) throws OutOfRangeConversionException;
+	public String convert(int number);
 }

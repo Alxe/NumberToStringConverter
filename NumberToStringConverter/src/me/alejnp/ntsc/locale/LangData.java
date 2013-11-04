@@ -1,11 +1,11 @@
 package me.alejnp.ntsc.locale;
 
 /**
- * Convenience class for storage of Language, with properties useful for localization.
+ * Convenience class for storage of Language Data, with properties useful for localization.
  * @author Alej. Núñez Pérez
  *
  */
-public final class Language {
+public final class LangData {
 	/**
 	 * The ID of the language, represented by a two character String.<br />
 	 * &emsp;examples: "en" for English, "es" for Spanish.
@@ -14,7 +14,7 @@ public final class Language {
 	
 	/**
 	 * The name of the class that impelements {@link IConverter}, appended to it's package.<br />
-	 * &emsp;examples: "EnglishConverter" for English, "SpanishConverter" for Spanish.
+	 * &emsp;examples: "com.example.EnglishConverter" for English, "com.example.SpanishConverter" for Spanish.
 	 */
 	public final String CLASS_NAME;
 	
@@ -29,7 +29,7 @@ public final class Language {
 	 * @param id - The ID of the language
 	 * @param name - The full name of the language
 	 */
-	public Language(String id, String name) {
+	public LangData(String id, String name) {
 		this(id, name, "numbers/numbers_" + id + ".xml");
 	}
 	
@@ -38,7 +38,7 @@ public final class Language {
 	 * @param className - The full name of the language
 	 * @param path - The path of the XML file with the mappings
 	 */
-	public Language(String id, String className, String path) {
+	public LangData(String id, String className, String path) {
 		ID = id;
 		CLASS_NAME = className;
 		PATH = path;
@@ -49,7 +49,7 @@ public final class Language {
 	 */
 	@Override
 	public String toString() {
-		return "Language [ID=" + ID + ", CLASS_NAME=" + CLASS_NAME + ", PATH=" + PATH + "]";
+		return "LangData [ID=" + ID + ", CLASS_NAME=" + CLASS_NAME + ", PATH=" + PATH + "]";
 	}
 
 	/**
@@ -77,7 +77,7 @@ public final class Language {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Language other = (Language) obj;
+		LangData other = (LangData) obj;
 		if (PATH == null) {
 			if (other.PATH != null)
 				return false;

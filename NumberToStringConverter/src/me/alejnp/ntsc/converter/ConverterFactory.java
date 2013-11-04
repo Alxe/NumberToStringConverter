@@ -10,7 +10,7 @@ import me.alejnp.ntsc.exception.ParsingException;
 import me.alejnp.ntsc.exception.UnsupportedLanguageException;
 import me.alejnp.ntsc.interfaces.IConverter;
 import me.alejnp.ntsc.interfaces.IDataLoader;
-import me.alejnp.ntsc.locale.Language;
+import me.alejnp.ntsc.locale.LangData;
 
 /**
  * Factory class that provides instances of Converters.
@@ -18,6 +18,18 @@ import me.alejnp.ntsc.locale.Language;
  *
  */
 public class ConverterFactory {
+	/**
+	 * Blank instance of {@link AbstractConverter}, useful to return this instead of null.
+	 */
+	protected static final IConverter blankConverter = new AbstractConverter(null) {
+		@Override
+		public String convert(int number) {
+			// Do nothing, return empty string.
+			
+			return "";
+		}
+	};
+	
 	private static List<ConverterFactory> factories;
 	
 	public static ConverterFactory getFactory(IDataLoader dataLoader) {
@@ -48,7 +60,7 @@ public class ConverterFactory {
 	/**
 	 * Mappings of <code>Languages</code> to <code>IConverter</code> instances, making heavy instanciation less stressful to the system.
 	 */
-	private final Map<Language, IConverter> converters;
+	private final Map<LangData, IConverter> converters;
 	
 	private ConverterFactory(IDataLoader dataLoader) {
 		this.dataLoader = dataLoader;
@@ -57,19 +69,19 @@ public class ConverterFactory {
 	}
 	
 	/**
-	 * Convenience but less secure call to {@link #getConverter(Language)}.
+	 * Convenience but less secure call to {@link #getConverter(LangData)}.
 	 * @param langId - <code>String</code> corresponding to the ID of the <code>Language</code>.
 	 * @return
 	 * @throws UnsupportedLanguageException - When the language is not supported, this 
 	 */
 	public IConverter getConverter(String langId) throws UnsupportedLanguageException {
-		Language lang = null;
+		LangData lang = null;
 		
-		for(Language l : converters.keySet()) if(l.ID.equals(langId)) { lang = l; break; }
+		for(LangData l : converters.keySet()) if(l.ID.equals(langId)) { lang = l; break; }
 			
 		if(lang == null) throw new UnsupportedLanguageException("There is no language for ID " + langId);
 		
-		return getConverter(new Language(langId, null));
+		return getConverter(new LangData(langId, null));
 	}
 	
 	/**
@@ -78,7 +90,7 @@ public class ConverterFactory {
 	 * @return
 	 * @throws UnsupportedLanguageException
 	 */
-	public IConverter getConverter(Language lang) throws UnsupportedLanguageException {	
+	public IConverter getConverter(LangData lang) throws UnsupportedLanguageException {	
 		if(lang == null) throw new UnsupportedLanguageException("There is no language for ID " + lang);
 		
 		// If converter is not properly instanciated, instanciates it and saves it in the map.
@@ -89,13 +101,14 @@ public class ConverterFactory {
 	}
 
 	/**
-	 * Initializes a map, sets it's keys to Languages supported and it's values to null, which will be properly linked later in {@link #buildLanguage(Language)}.
+	 * Initializes a map, sets it's keys to Languages supported and it's values to null, which will be properly linked later in {@link #buildLanguage(LangData)}.
+	 * @return The new <code>which</code> Languages (key) and Converter (value) instances.
 	 */
-	private Map<Language, IConverter> createConverterPool() {
-		Map<Language, IConverter> converters = new HashMap<Language, IConverter>();
+	private Map<LangData, IConverter> createConverterPool() {
+		Map<LangData, IConverter> converters = new HashMap<LangData, IConverter>();
 	 
 		try {
-			for(Language l : dataLoader.getSupportedLanguages()) {
+			for(LangData l : dataLoader.getSupportedLanguages()) {
 				converters.put(l, null);
 			}
 			
@@ -112,7 +125,7 @@ public class ConverterFactory {
 	 * @param lang - The target Language to build.
 	 * @throws UnsupportedLanguageException Thrown if the language is not supported
 	 */
-	private IConverter buildConverterForLanguage(Language lang) throws UnsupportedLanguageException {
+	private IConverter buildConverterForLanguage(LangData lang) throws UnsupportedLanguageException {
 		try {
 			Map<Integer, String> map = dataLoader.getLanguageMap(lang);
 			
@@ -133,20 +146,17 @@ public class ConverterFactory {
 	 * Instanciates a new Converter from class <code>className</code>, with <code>values</code> associated to it.
 	 * @param className - The class name of the {@link IConverter} to instanciate.
 	 * @param values - The values that will be passed to the {@link IConverter} object.
-	 * @return
+	 * @return The newly created Converter object.
 	 */
 	private IConverter instanciateConverter(String className, Map<Integer, String> values) {
 		try {
 			IConverter converter;
 			
 			// Obtain the class of the desired object.
-			Class<?> clazz = Class.forName(className);
-			
-			// Get the type of the values map we will send into the constructor.
-			Class<?> type = values.getClass();
+			Class<?> cls = Class.forName(className);
 			
 			// Grab the constructor of the class we want to instanciate.
-			Constructor<?> constr = clazz.getDeclaredConstructor(type);
+			Constructor<?> constr = cls.getDeclaredConstructor(Map.class);
 			
 			// Finish by instanciating the converter.
 			converter = (IConverter) constr.newInstance(values);
@@ -157,6 +167,6 @@ public class ConverterFactory {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return blankConverter;
 	}
 }

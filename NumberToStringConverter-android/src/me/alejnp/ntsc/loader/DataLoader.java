@@ -11,7 +11,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import me.alejnp.ntsc.exception.ParsingException;
 import me.alejnp.ntsc.interfaces.IDataLoader;
-import me.alejnp.ntsc.locale.Language;
+import me.alejnp.ntsc.locale.LangData;
 import me.alejnp.ntsc.parser.LanguagesHandler;
 import me.alejnp.ntsc.parser.NumbersHandler;
 
@@ -40,9 +40,9 @@ public final class DataLoader implements IDataLoader {
 		this.context = context;
 	}
 	
-	public List<Language> getSupportedLanguages() throws ParsingException {
+	public List<LangData> getSupportedLanguages() throws ParsingException {
 		try {
-			List<Language> list = new ArrayList<Language>();
+			List<LangData> list = new ArrayList<LangData>();
 			
 			// Instances a XMLReader, sets it's content handler and passes the retrieved data to a list.
 			XMLReader xr = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
@@ -61,7 +61,7 @@ public final class DataLoader implements IDataLoader {
 	}
 	
 	@SuppressLint("UseSparseArrays")
-	public Map<Integer, String> getLanguageMap(Language lang) throws ParsingException {
+	public Map<Integer, String> getLanguageMap(LangData lang) throws ParsingException {
 		try {
 			Map<Integer, String> map = new HashMap<Integer, String>();
 			
@@ -72,11 +72,11 @@ public final class DataLoader implements IDataLoader {
 			
 			return map;
 		} catch (SAXException saxe) {
-			throw new ParsingException(saxe.toString());
+			throw new ParsingException(saxe.getMessage());
 		} catch (ParserConfigurationException pce) {
-			throw new ParsingException(pce.toString());
+			throw new ParsingException(pce.getMessage());
 		} catch (IOException ioe) {
-			throw new ParsingException(ioe.toString());
+			throw new ParsingException(ioe.getMessage());
 		}
 	}
 }

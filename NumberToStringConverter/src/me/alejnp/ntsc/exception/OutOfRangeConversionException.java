@@ -5,7 +5,7 @@ package me.alejnp.ntsc.exception;
  * @author Alej. Núñez Pérez.
  *
  */
-public class OutOfRangeConversionException extends IllegalArgumentException {
+public class OutOfRangeConversionException extends RuntimeException {
 	/**
 	 * Auto-generated serialVersionUID field
 	 */
