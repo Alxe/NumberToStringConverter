@@ -2,7 +2,6 @@ package me.alejnp.ntsc.converter;
 
 import java.util.Map;
 
-import me.alejnp.ntsc.exception.OutOfRangeConversionException;
 import me.alejnp.ntsc.interfaces.IConverter;
 
 /**

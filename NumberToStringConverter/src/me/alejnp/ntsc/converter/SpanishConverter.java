@@ -2,8 +2,6 @@ package me.alejnp.ntsc.converter;
 
 import java.util.Map;
 
-import me.alejnp.ntsc.exception.OutOfRangeConversionException;
-
 public final class SpanishConverter extends AbstractConverter {
 	private final String UNSUPORTED_NUMBER = "el método no soporta más de 999 millones";
 	private final String MINUS = "menos";
@@ -31,7 +29,7 @@ public final class SpanishConverter extends AbstractConverter {
 		
 		if(number > 999999999) {
 			// En el caso de que el valor superase los 999 millones, tiramos una excepción mencionando que no está soportado.
-			throw new OutOfRangeConversionException(UNSUPORTED_NUMBER);
+			str = UNSUPORTED_NUMBER;
 			
 		} else if(number > 999999) {
 			// El número será inferior a mil millones, pero igual o mayor a un millón.

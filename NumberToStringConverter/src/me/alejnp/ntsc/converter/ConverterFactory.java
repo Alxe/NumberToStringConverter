@@ -33,10 +33,10 @@ public class ConverterFactory {
 	private static List<ConverterFactory> factories;
 	
 	public static ConverterFactory getFactory(IDataLoader dataLoader) {
-		// If the IDataLoader is null, return null.
+		// If the DataLoader is null, return null.
 		if(dataLoader == null) return null;
 		
-		// If the List is not instanciated, instanciate it.
+		// If the factories List is not instanciated, instanciate it.
 		if(factories == null) factories = new ArrayList<ConverterFactory>();
 		
 		// Traverse the list, search for a compatible factory and return it.
@@ -81,7 +81,7 @@ public class ConverterFactory {
 			
 		if(lang == null) throw new UnsupportedLanguageException("There is no language for ID " + langId);
 		
-		return getConverter(new LangData(langId, null));
+		return getConverter(lang);
 	}
 	
 	/**

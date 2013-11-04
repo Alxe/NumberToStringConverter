@@ -26,7 +26,7 @@ public class NumbersHandler extends DefaultHandler {
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		if(uri.equals("entry")) {
+		if(localName.equals("entry")) {
 			int key = Integer.parseInt(attributes.getValue("key"));
 			String value = attributes.getValue("value");
 			
