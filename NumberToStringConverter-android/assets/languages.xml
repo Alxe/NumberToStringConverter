@@ -5,10 +5,10 @@
 <languages>
 	<entry id="en"
 	    dataPath="numbers/numbers_en.xml" 
-	    converterClass="me.alejnp.converter.EnglishConverter" />
+	    converterClass="me.alejnp.ntsc.converter.EnglishConverter" />
 	
 	<entry id="es"
 	    dataPath="numbers/numbers_es.xml"
-	    converterClass="me.alejno.converter.SpanishConverter" />
+	    converterClass="me.alejnp.ntsc.converter.SpanishConverter" />
 	
 </languages>

@@ -146,7 +146,7 @@ public class ConverterFactory {
 			Class<?> type = values.getClass();
 			
 			// Grab the constructor of the class we want to instanciate.
-			Constructor<?> constr = clazz.getConstructor(type);
+			Constructor<?> constr = clazz.getDeclaredConstructor(type);
 			
 			// Finish by instanciating the converter.
 			converter = (IConverter) constr.newInstance(values);
