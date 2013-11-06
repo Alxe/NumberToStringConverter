@@ -17,11 +17,14 @@ public class MainActivity extends Activity {
 	private abstract class AbstractOnClickListener implements OnClickListener {
 		@Override
 		public final void onClick(View v) {
-			if(ntsc == null) updateConverter();
-			
-			doSomething(v);
-			reConvert();
-			
+			try {
+				if(ntsc == null) updateConverter();
+				
+				doSomething(v);
+				reConvert();
+			} catch(NumberFormatException e) {
+//				Toast.makeText(getApplicationContext(), R.string.integer_out_of_range, Toast.LENGTH_SHORT).show();
+			}
 		}
 		
 		private final void reConvert() {
