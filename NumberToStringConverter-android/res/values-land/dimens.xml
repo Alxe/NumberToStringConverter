@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fontSize">28sp</dimen>
+    <dimen name="labelMargin">12dp</dimen>
+    <dimen name="buttonWidth">72dp</dimen>
+    <dimen name="buttonHeight">36dp</dimen>
+</resources>
