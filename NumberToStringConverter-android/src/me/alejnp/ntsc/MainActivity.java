@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 		ConverterFactory cf = ConverterFactory.getFactory(dl);
 		
 		try {
-			cf.getConverter(getString(R.string.lang));
+			ntsc = cf.getConverter(getString(R.string.lang));
 		} catch (UnsupportedLanguageException e) {
 			Toast.makeText(getApplicationContext(), R.string.converter_not_found, Toast.LENGTH_SHORT).show();
 		}

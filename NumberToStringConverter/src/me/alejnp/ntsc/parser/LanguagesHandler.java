@@ -23,11 +23,11 @@ public class LanguagesHandler extends DefaultHandler {
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-		// Retrieves "id", "className" and "xmlPath" per "entry" of the languages.xml file.
+		// Retrieves "id", "converterClass" and "dataPath" per "entry" of the languages.xml file.
 		if(localName.equals("entry")) {
 			String id = attributes.getValue("id");
-			String path = attributes.getValue("xmlPath");
-			String className = attributes.getValue("className");
+			String path = attributes.getValue("dataPath");
+			String className = attributes.getValue("converterClass");
 			
 			list.add(new LangData(id, className, path));
 		}
