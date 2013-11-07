@@ -118,12 +118,12 @@ public class MainActivity extends Activity {
 		return Integer.parseInt(((String) lblNumber.getText()));
 	}
 	
-	public void addToAccumulator(int i) {
+	public void addToAccumulator(int n) {
 		if(getAccumulator() == 0) {
 			lblNumber.setText(R.string.empty_string);
 		}
 		
-		lblNumber.setText(((String) lblNumber.getText()) + i);
+		lblNumber.setText((String)lblNumber.getText() + n);
 	}
 	
 	public void resetAccumulator() {
