@@ -2,10 +2,6 @@ package me.alejnp.ntsc.converter;
 
 import java.util.Map;
 
-/**
- * {@link IConverter} implementation for the Spanish language.
- * @author Alej. Núñez Pérez
- */
 public final class SpanishConverter extends AbstractConverter {
 	private final String UNSUPORTED_NUMBER = "el método no soporta más de 999 millones";
 	private final String MINUS = "menos";
@@ -55,11 +51,6 @@ public final class SpanishConverter extends AbstractConverter {
 		return (((negative) ? MINUS : "") + " " + str).trim();
 	}
 	
-	/**
-	 * Convenience method to treat a number in a range.
-	 * @param number The number to be converted.
-	 * @return The converted number as an {@link String}.
-	 */
 	private String treatMillions(int number) {
 		final String sMillions = "millones";
 		final int million = 1000000;
@@ -80,11 +71,6 @@ public final class SpanishConverter extends AbstractConverter {
 				((modOfNumber != 0) ? (" " + convert(modOfNumber)) : "");
 	}
 	
-	/**
-	 * Convenience method to treat a number in a range.
-	 * @param number The number to be converted.
-	 * @return The converted number as an {@link String}.
-	 */
 	private String treatThousands(int number) {
 		final String sThousand = "mil";
 		final int thousand = 1000;
@@ -105,11 +91,6 @@ public final class SpanishConverter extends AbstractConverter {
 				((modOfNumber != 0) ? (" " + convert(modOfNumber)) : ""); 
 	}
 	
-	/**
-	 * Convenience method to treat a number in a range.
-	 * @param number The number to be converted.
-	 * @return The converted number as an {@link String}.
-	 */
 	private String treatHundreds(int number) {
 		final String sHundred = "cien";
 		final int hundred = 100;
@@ -123,11 +104,6 @@ public final class SpanishConverter extends AbstractConverter {
 			map.get(hundredthOfNumber * hundred) + " " + convert(modOfNumber) );
 	}
 	
-	/**
-	 * Convenience method to treat a number in a range.
-	 * @param number The number to be converted.
-	 * @return The converted number as an {@link String}.
-	 */
 	private String treatSimple(int number) {
 		final String sTen = "dieci",
 				sTwenty = "veinti";
