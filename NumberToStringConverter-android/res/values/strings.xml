@@ -17,5 +17,5 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="reset">CE</string>
-    <string name="dot">.</string>
+    <string name="dot">+/-</string>
 </resources>

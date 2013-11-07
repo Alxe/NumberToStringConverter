@@ -103,12 +103,12 @@
         android:text="@string/reset"
         android:textSize="@dimen/fontSize" />
     
-    <Button 
-        android:id="@+id/btnDot"
+    <Button
+        android:id="@+id/btnSign"
         android:layout_width="@dimen/buttonWidth"
         android:layout_height="@dimen/buttonHeight"
-        android:layout_toRightOf="@id/btnZero"
         android:layout_below="@id/btnNine"
+        android:layout_toRightOf="@id/btnZero"
         android:text="@string/dot"
         android:textSize="@dimen/fontSize" />
     

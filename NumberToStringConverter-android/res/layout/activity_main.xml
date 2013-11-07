@@ -104,7 +104,7 @@
         android:textSize="@dimen/fontSize" />
     
     <Button 
-        android:id="@+id/btnDot"
+        android:id="@+id/btnSign"
         android:layout_width="@dimen/buttonWidth"
         android:layout_height="@dimen/buttonHeight"
         android:layout_toRightOf="@id/btnZero"

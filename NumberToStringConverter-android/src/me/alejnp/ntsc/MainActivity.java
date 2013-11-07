@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 	private TextView lblNumber, lblString;
 	private Button btnZero, btnOne, btnTwo, btnThree,
 		btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine,
-		btnReset, btnDot;
+		btnReset, btnSign;
 	private IConverter ntsc;
 	
 	@Override
@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
 		btnSeven = (Button) findViewById(R.id.btnSeven);
 		btnEight = (Button) findViewById(R.id.btnEight);
 		btnNine = (Button) findViewById(R.id.btnNine);
-		btnDot = (Button) findViewById(R.id.btnDot);
+		btnSign = (Button) findViewById(R.id.btnSign);
 		btnReset = (Button) findViewById(R.id.btnReset);
 		
 		lblNumber = (TextView) findViewById(R.id.lblNumber);
@@ -154,12 +154,19 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		btnDot.setOnClickListener(new OnClickListener() {
+		btnSign.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "UNSUPPORTED", Toast.LENGTH_LONG).show();
+				String str = (String) lblNumber.getText();
 				
+				if(str.startsWith("-")) {
+					str = str.substring(1);
+				} else {
+					str = "-" + str;
+				}
+				
+				lblNumber.setText(str);
 			}
 		});
 		
