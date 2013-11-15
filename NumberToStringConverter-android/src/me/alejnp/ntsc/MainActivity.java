@@ -122,7 +122,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void doSomething(View v) {
-				accumulator = (accumulator < 0) ? -accumulator : accumulator;
+				accumulator = -accumulator;
 			}
 		});
 		
@@ -144,6 +144,8 @@ public class MainActivity extends Activity {
 		
 		lblNumber = (TextView) findViewById(R.id.lblNumber);
 		lblString = (TextView) findViewById(R.id.lblString);
+		
+		accumulator = 0L;
 	}
 
 	private void addToAccumulator(int n) {
