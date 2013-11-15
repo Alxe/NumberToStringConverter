@@ -1,5 +1,7 @@
 package me.alejnp.ntsc;
 
+import java.text.NumberFormat;
+
 import me.alejnp.ntsc.converter.ConverterFactory;
 import me.alejnp.ntsc.exception.UnsupportedLanguageException;
 import me.alejnp.ntsc.interfaces.IConverter;
@@ -28,9 +30,10 @@ public class MainActivity extends Activity {
 		}
 		
 		private final void reConvert() {
-			int number = Integer.parseInt((String) lblNumber.getText());
-			String word = ntsc.convert(number);
+			String number = NumberFormat.getInstance().format(accumulator),
+					word = ntsc.convert(accumulator.intValue());
 			
+			lblNumber.setText(number);
 			lblString.setText(word);
 		}
 		
@@ -46,15 +49,18 @@ public class MainActivity extends Activity {
 		@Override
 		public void doSomething(View v) {
 			addToAccumulator(value);
-			updateWords();
 		}
 	}
-
+	
 	private TextView lblNumber, lblString;
+	
 	private Button btnZero, btnOne, btnTwo, btnThree,
 		btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine,
 		btnReset, btnSign;
+	
 	private IConverter ntsc;
+	
+	private Long accumulator;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +73,14 @@ public class MainActivity extends Activity {
 		
 	}
 
-	public void updateConverter() {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	private void updateConverter() {
 		DataLoader dl = new DataLoader(getApplicationContext());
 		ConverterFactory cf = ConverterFactory.getFactory(dl);
 		
@@ -79,14 +92,43 @@ public class MainActivity extends Activity {
 		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	private void setDefaultValues() {
+		lblNumber.setText(R.string.empty_number);
+		lblString.setText(R.string.empty_string);
+		
 	}
-	
-	public void updateReferences() {
+
+	private void setListeners() {
+		btnZero.setOnClickListener(new AddNumberOnclickListener(0));
+		btnOne.setOnClickListener(new AddNumberOnclickListener(1));
+		btnTwo.setOnClickListener(new AddNumberOnclickListener(2));
+		btnThree.setOnClickListener(new AddNumberOnclickListener(3));
+		btnFour.setOnClickListener(new AddNumberOnclickListener(4));
+		btnFive.setOnClickListener(new AddNumberOnclickListener(5));
+		btnSix.setOnClickListener(new AddNumberOnclickListener(6));
+		btnSeven.setOnClickListener(new AddNumberOnclickListener(7));
+		btnEight.setOnClickListener(new AddNumberOnclickListener(8));
+		btnNine.setOnClickListener(new AddNumberOnclickListener(9));
+		
+		btnReset.setOnClickListener(new AbstractOnClickListener() {
+			
+			@Override
+			public void doSomething(View v) {
+				accumulator = 0L;
+			}
+		});
+		
+		btnSign.setOnClickListener(new AbstractOnClickListener() {
+			
+			@Override
+			public void doSomething(View v) {
+				accumulator = (accumulator < 0) ? -accumulator : accumulator;
+			}
+		});
+		
+	}
+
+	private void updateReferences() {
 		btnZero = (Button) findViewById(R.id.btnZero);
 		btnOne = (Button) findViewById(R.id.btnOne);
 		btnTwo = (Button) findViewById(R.id.btnTwo);
@@ -103,72 +145,11 @@ public class MainActivity extends Activity {
 		lblNumber = (TextView) findViewById(R.id.lblNumber);
 		lblString = (TextView) findViewById(R.id.lblString);
 	}
-	
-	private void setDefaultValues() {
-		lblNumber.setText(R.string.empty_number);
-		lblString.setText(R.string.empty_string);
+
+	private void addToAccumulator(int n) {
+		long temp = (accumulator * 10) + n;
 		
-	}
-	
-	/**
-	 * Returns an updated value of the accumulator. This method has no side effects (changing accumulator value).
-	 * @return The new value
-	 */
-	public int getAccumulator() {
-		return Integer.parseInt(((String) lblNumber.getText()));
-	}
-	
-	public void addToAccumulator(int n) {
-		if(getAccumulator() == 0) {
-			lblNumber.setText(R.string.empty_string);
-		}
-		
-		lblNumber.setText((String)lblNumber.getText() + n);
-	}
-	
-	public void resetAccumulator() {
-		lblNumber.setText(R.string.empty_number);
-	}
-	
-	public void updateWords() {
-		lblString.setText(ntsc.convert(getAccumulator()));
+		if(temp <= 999999999) { accumulator = temp; }
 	}
 
-	private void setListeners() {
-		btnZero.setOnClickListener(new AddNumberOnclickListener(0));
-		btnOne.setOnClickListener(new AddNumberOnclickListener(1));
-		btnTwo.setOnClickListener(new AddNumberOnclickListener(2));
-		btnThree.setOnClickListener(new AddNumberOnclickListener(3));
-		btnFour.setOnClickListener(new AddNumberOnclickListener(4));
-		btnFive.setOnClickListener(new AddNumberOnclickListener(5));
-		btnSix.setOnClickListener(new AddNumberOnclickListener(6));
-		btnSeven.setOnClickListener(new AddNumberOnclickListener(7));
-		btnEight.setOnClickListener(new AddNumberOnclickListener(8));
-		btnNine.setOnClickListener(new AddNumberOnclickListener(9));
-		
-		btnReset.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				resetAccumulator();
-			}
-		});
-		
-		btnSign.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				String str = (String) lblNumber.getText();
-				
-				if(str.startsWith("-")) {
-					str = str.substring(1);
-				} else {
-					str = "-" + str;
-				}
-				
-				lblNumber.setText(str);
-			}
-		});
-		
-	}
 }
