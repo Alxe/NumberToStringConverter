@@ -1,6 +1,7 @@
 package me.alejnp.ntsc.converter;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -162,10 +163,23 @@ public class ConverterFactory {
 			converter = (IConverter) constr.newInstance(values);
 			
 			return converter;
-		} catch(ReflectiveOperationException e) {
-			System.err.println("Failed at instanciating the converter, blankConverter will be returned.");
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
 			e.printStackTrace();
 		}
+		
+		System.err.println("Failed at instanciating the converter, blankConverter will be returned.");
 		
 		return blankConverter;
 	}
