@@ -3,5 +3,32 @@
 <!DOCTYPE numbers SYSTEM "numbers.dtd">
 
 <numbers>
-    <entry key="0" value=""/>
+    <entry key="0" value="zero"/>
+    <entry key="1" value="one"/>
+    <entry key="2" value="two"/>
+    <entry key="3" value="three"/>
+    <entry key="4" value="four"/>
+    <entry key="5" value="five"/>
+    <entry key="6" value="six"/>
+    <entry key="7" value="seven"/>
+    <entry key="8" value="eight"/>
+    <entry key="9" value="nine"/>
+    <entry key="10" value="ten"/>
+    <entry key="11" value="eleven"/>
+    <entry key="12" value="twelve"/>
+    <entry key="13" value="thirteen"/>
+    <entry key="14" value="fourteen"/>
+    <entry key="15" value="fiveteen"/>
+    <entry key="16" value="sixteen"/>
+    <entry key="17" value="seventeen"/>
+    <entry key="18" value="eighteen"/>
+    <entry key="19" value="nineteen"/>
+    <entry key="20" value="twenty"/>
+    <entry key="30" value="thirty"/>
+    <entry key="40" value="fourty"/>
+    <entry key="50" value="fifty"/>
+    <entry key="60" value="sixty"/>
+    <entry key="70" value="seventy"/>
+    <entry key="80" value="eighty"/>
+    <entry key="90" value="ninety"/>
 </numbers>
